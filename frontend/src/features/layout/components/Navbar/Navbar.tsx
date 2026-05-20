@@ -148,7 +148,7 @@ const Navbar = () => {
                 <Link className="nav-link px-0 text-dark" to="/articles" onClick={() => setIsOpen(false)}>Articles</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link px-0 text-dark" to='/reviews' onClick={() => setIsOpen(false)}>Reviews</Link>
+                <Link className="nav-link px-0 text-dark" to="/gallery" onClick={() => setIsOpen(false)}>Gallery</Link>
               </li>
             </ul>
           </div>

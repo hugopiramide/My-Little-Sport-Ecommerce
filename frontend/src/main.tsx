@@ -19,6 +19,8 @@ import ProtectedRoute from './features/auth/components/ProtectedRoute.tsx';
 import AboutUs from './features/shared/pages/AboutUs/AboutUs.tsx'
 import Gallery from './features/shared/pages/Gallery/Gallery.tsx'
 import Profile from './features/shared/pages/Profile/Profile.tsx'
+import Checkout from './features/orders/pages/Checkout.tsx'
+import OrderSuccess from './features/orders/pages/OrderSuccess.tsx'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
           {
             path: 'profile',
             element: <Profile />
+          },
+          {
+            path: 'checkout',
+            element: <Checkout />
+          },
+          {
+            path: 'order-success',
+            element: <OrderSuccess />
           }
         ]
       },

@@ -1,4 +1,5 @@
 import type { OrderResponseDTO, OrderRequestDTO } from '../types';
+import { getAuthHeaders } from '../../auth/utils/authUtils';
 
 const API_URL = 'http://localhost:8080/api/orders';
 
@@ -12,19 +13,23 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
 export const OrderService = {
   getOrdersByUser: async (userId: number): Promise<OrderResponseDTO[]> => {
-    const response = await fetch(`${API_URL}/user/${userId}`);
+    const response = await fetch(`${API_URL}/user/${userId}`, {
+      headers: getAuthHeaders()
+    });
     return handleResponse<OrderResponseDTO[]>(response);
   },
 
   getOrderDetails: async (orderId: number): Promise<OrderResponseDTO> => {
-    const response = await fetch(`${API_URL}/${orderId}`);
+    const response = await fetch(`${API_URL}/${orderId}`, {
+      headers: getAuthHeaders()
+    });
     return handleResponse<OrderResponseDTO>(response);
   },
 
   createOrder: async (orderRequest: OrderRequestDTO): Promise<OrderResponseDTO> => {
     const response = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders(),
       body: JSON.stringify(orderRequest),
     });
     return handleResponse<OrderResponseDTO>(response);

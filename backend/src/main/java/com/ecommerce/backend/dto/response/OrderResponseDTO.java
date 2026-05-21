@@ -1,6 +1,7 @@
 package com.ecommerce.backend.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.ecommerce.backend.dto.ShippingAddressDTO;
 import com.ecommerce.backend.model.enums.OrderStatus;
@@ -13,5 +14,6 @@ public record OrderResponseDTO(
     ShippingAddressDTO shippingAddress,
     Long userId,
     String userName,
-    String userEmail
+    String userEmail,
+    List<OrderItemResponseDTO> items
 ) {}

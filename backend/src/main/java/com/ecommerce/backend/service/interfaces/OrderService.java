@@ -9,4 +9,6 @@ import java.util.List;
 public interface OrderService extends BaseCrudService<OrderResponseDTO, OrderRequestDTO, OrderRequestDTO, Long> {
 
     List<OrderResponseDTO> findByFilters(String dateFrom, String dateTo, OrderStatus status);
+    
+    List<OrderResponseDTO> findByUserId(Long userId);
 }

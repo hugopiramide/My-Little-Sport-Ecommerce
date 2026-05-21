@@ -79,4 +79,10 @@ public class OrderServiceImpl extends BaseCrudServiceImpl<Order, OrderResponseDT
         List<Order> orders = ((OrderRepository) repository).findByFilters(normalizedDateFrom, normalizedDateTo, status);
         return toDtoList(orders);
     }
+    
+    @Override
+    public List<OrderResponseDTO> findByUserId(Long userId) {
+        List<Order> orders = ((OrderRepository) repository).findByUserId(userId);
+        return toDtoList(orders);   
+    }
 }

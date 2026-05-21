@@ -157,48 +157,60 @@ INSERT INTO `product_variant` (`product_id`, `size`, `stock`, `price_modifier`) 
 (20, '40', 2, 0.0), (20, '41', 1, 0.0), (20, '42', 1, 0.0);
 
 -- ============================================================
--- PEDIDOS (25 pedidos con distintos estados y usuarios)
+-- PEDIDOS (33 pedidos con distintos estados y usuarios)
 -- ============================================================
 INSERT INTO `orders` (`user_id`, `order_date`, `status`, `total_price`, `recipient_name`, `company_name`, `street`, `address_line2`, `city`, `state`, `postal_code`, `country_code`, `phone_number`, `delivery_instructions`) VALUES
+-- admin (user 1)
+(1,  '2024-01-05 09:00:00', 'DELIVERED',  299.99, 'Admin Test', 'Test Company', 'Avenida Principal 1, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666000000', NULL),
+(1,  '2024-02-15 11:30:00', 'SENDING', 189.50, 'Admin Test', 'Test Company', 'Calle Admin 5, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666000000', NULL),
 -- hugo (user 2)
-(2,  '2024-01-15 10:30:00', 'ENTREGADO',  129.99, 'Hugo Piramide', NULL, 'Calle Falsa 123, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666555444', 'Entregar en portería'),
-(2,  '2024-03-20 14:15:00', 'PROCESANDO', 195.50, 'Hugo Piramide', NULL, 'Avenida Siempre Viva 742, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666555444', NULL),
-(2,  '2024-02-28 09:45:00', 'ENVIADO',    150.00, 'Hugo Piramide', NULL, 'Calle Gran Vía 10, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666555444', NULL),
+(2,  '2024-01-15 10:30:00', 'DELIVERED',  129.99, 'Hugo Piramide', NULL, 'Calle Falsa 123, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666555444', 'Entregar en portería'),
+(2,  '2024-03-20 14:15:00', 'SENDING', 195.50, 'Hugo Piramide', NULL, 'Avenida Siempre Viva 742, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666555444', NULL),
+(2,  '2024-02-28 09:45:00', 'SENDING',    150.00, 'Hugo Piramide', NULL, 'Calle Gran Vía 10, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666555444', NULL),
 -- mgarcia (user 3)
-(3,  '2024-01-08 11:20:00', 'ENTREGADO',  264.99, 'María García', NULL, 'Paseo de la Castellana 88, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666111222', NULL),
-(3,  '2024-01-22 15:50:00', 'CANCELADO',   85.50, 'María García', NULL, 'Calle Serrano 45, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666111222', NULL),
+(3,  '2024-01-08 11:20:00', 'DELIVERED',  264.99, 'María García', NULL, 'Paseo de la Castellana 88, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666111222', NULL),
+(3,  '2024-01-22 15:50:00', 'CANCELLED',   85.50, 'María García', NULL, 'Calle Serrano 45, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666111222', NULL),
 -- carlosmtz (user 4)
-(4,  '2024-02-05 13:30:00', 'ENTREGADO',  220.00, 'Carlos Martínez', NULL, 'Avenida Diagonal 350, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666222333', NULL),
-(4,  '2024-03-18 10:00:00', 'PROCESANDO', 145.00, 'Carlos Martínez', NULL, 'Carrer de Balmes 78, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666222333', NULL),
+(4,  '2024-02-05 13:30:00', 'DELIVERED',  220.00, 'Carlos Martínez', NULL, 'Avenida Diagonal 350, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666222333', NULL),
+(4,  '2024-03-18 10:00:00', 'SENDING', 145.00, 'Carlos Martínez', NULL, 'Carrer de Balmes 78, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666222333', NULL),
 -- laural (user 5)
-(5,  '2024-02-14 16:45:00', 'ENVIADO',    179.98, 'Laura López', NULL, 'Plaza Mayor 1, Salamanca', NULL, 'Salamanca', 'Salamanca', '37001', 'ES', '666333444', NULL),
-(5,  '2024-01-30 12:15:00', 'ENTREGADO',   99.99, 'Laura López', NULL, 'Calle Rúa 5, Santiago de Compostela', NULL, 'Santiago', 'Galicia', '15701', 'ES', '666333444', NULL),
+(5,  '2024-02-14 16:45:00', 'SENDING',    179.98, 'Laura López', NULL, 'Plaza Mayor 1, Salamanca', NULL, 'Salamanca', 'Salamanca', '37001', 'ES', '666333444', NULL),
+(5,  '2024-01-30 12:15:00', 'DELIVERED',   99.99, 'Laura López', NULL, 'Calle Rúa 5, Santiago de Compostela', NULL, 'Santiago', 'Galicia', '15701', 'ES', '666333444', NULL),
 -- andres (user 6)
-(6,  '2024-03-22 09:30:00', 'PROCESANDO', 310.00, 'Andrés Sánchez', NULL, 'Gran Vía 1, Bilbao', NULL, 'Bilbao', 'Vizcaya', '48001', 'ES', '666444555', NULL),
-(6,  '2024-02-10 14:20:00', 'ENTREGADO',  159.99, 'Andrés Sánchez', NULL, 'Calle Ercilla 14, Bilbao', NULL, 'Bilbao', 'Vizcaya', '48001', 'ES', '666444555', NULL),
+(6,  '2024-03-22 09:30:00', 'SENDING', 310.00, 'Andrés Sánchez', NULL, 'Gran Vía 1, Bilbao', NULL, 'Bilbao', 'Vizcaya', '48001', 'ES', '666444555', NULL),
+(6,  '2024-02-10 14:20:00', 'DELIVERED',  159.99, 'Andrés Sánchez', NULL, 'Calle Ercilla 14, Bilbao', NULL, 'Bilbao', 'Vizcaya', '48001', 'ES', '666444555', NULL),
 -- sofiaf (user 7)
-(7,  '2024-02-25 11:10:00', 'ENVIADO',    169.99, 'Sofía Fernández', NULL, 'Calle Colón 20, Valencia', NULL, 'Valencia', 'Valencia', '46001', 'ES', '666555666', NULL),
-(7,  '2024-01-20 15:40:00', 'ENTREGADO',  105.50, 'Sofía Fernández', NULL, 'Avenida del Puerto 33, Valencia', NULL, 'Valencia', 'Valencia', '46001', 'ES', '666555666', NULL),
+(7,  '2024-02-25 11:10:00', 'SENDING',    169.99, 'Sofía Fernández', NULL, 'Calle Colón 20, Valencia', NULL, 'Valencia', 'Valencia', '46001', 'ES', '666555666', NULL),
+(7,  '2024-01-20 15:40:00', 'DELIVERED',  105.50, 'Sofía Fernández', NULL, 'Avenida del Puerto 33, Valencia', NULL, 'Valencia', 'Valencia', '46001', 'ES', '666555666', NULL),
 -- pabloruiz (user 8)
-(8,  '2024-01-12 10:05:00', 'CANCELADO',  139.00, 'Pablo Ruiz', NULL, 'Calle Larios 7, Málaga', NULL, 'Málaga', 'Málaga', '29001', 'ES', '666777888', NULL),
-(8,  '2024-02-20 13:25:00', 'ENTREGADO',  240.00, 'Pablo Ruiz', NULL, 'Paseo del Parque 2, Málaga', NULL, 'Málaga', 'Málaga', '29001', 'ES', '666777888', NULL),
+(8,  '2024-01-12 10:05:00', 'CANCELLED',  139.00, 'Pablo Ruiz', NULL, 'Calle Larios 7, Málaga', NULL, 'Málaga', 'Málaga', '29001', 'ES', '666777888', NULL),
+(8,  '2024-02-20 13:25:00', 'DELIVERED',  240.00, 'Pablo Ruiz', NULL, 'Paseo del Parque 2, Málaga', NULL, 'Málaga', 'Málaga', '29001', 'ES', '666777888', NULL),
 -- elenat (user 9)
-(9,  '2024-03-19 08:50:00', 'PROCESANDO', 89.00,  'Elena Torres', NULL, 'Calle Real 11, Valladolid', NULL, 'Valladolid', 'Castilla y León', '47001', 'ES', '666888999', NULL),
-(9,  '2024-02-03 12:35:00', 'ENTREGADO',  215.50, 'Elena Torres', NULL, 'Paseo de Zorrilla 90, Valladolid', NULL, 'Valladolid', 'Castilla y León', '47001', 'ES', '666888999', NULL),
+(9,  '2024-03-19 08:50:00', 'SENDING', 89.00,  'Elena Torres', NULL, 'Calle Real 11, Valladolid', NULL, 'Valladolid', 'Castilla y León', '47001', 'ES', '666888999', NULL),
+(9,  '2024-02-03 12:35:00', 'DELIVERED',  215.50, 'Elena Torres', NULL, 'Paseo de Zorrilla 90, Valladolid', NULL, 'Valladolid', 'Castilla y León', '47001', 'ES', '666888999', NULL),
 -- diegor (user 10)
-(10, '2024-03-05 14:15:00', 'ENVIADO',    274.99, 'Diego Ramírez', NULL, 'Calle Alfonso I 20, Zaragoza', NULL, 'Zaragoza', 'Zaragoza', '50001', 'ES', '666999000', NULL),
-(10, '2024-01-25 10:40:00', 'ENTREGADO',  120.00, 'Diego Ramírez', NULL, 'Paseo de la Independencia 5, Zaragoza', NULL, 'Zaragoza', 'Zaragoza', '50001', 'ES', '666999000', NULL),
+(10, '2024-03-05 14:15:00', 'SENDING',    274.99, 'Diego Ramírez', NULL, 'Calle Alfonso I 20, Zaragoza', NULL, 'Zaragoza', 'Zaragoza', '50001', 'ES', '666999000', NULL),
+(10, '2024-01-25 10:40:00', 'DELIVERED',  120.00, 'Diego Ramírez', NULL, 'Paseo de la Independencia 5, Zaragoza', NULL, 'Zaragoza', 'Zaragoza', '50001', 'ES', '666999000', NULL),
 -- vale (user 11)
-(11, '2024-02-12 16:20:00', 'ENTREGADO',  184.99, 'Valentina Moreno', NULL, 'Calle Tetuán 8, Sevilla', NULL, 'Sevilla', 'Sevilla', '41001', 'ES', '666000111', NULL),
-(11, '2024-03-17 11:55:00', 'PROCESANDO', 145.00, 'Valentina Moreno', NULL, 'Avenida de la Constitución 1, Sevilla', NULL, 'Sevilla', 'Sevilla', '41001', 'ES', '666000111', NULL),
+(11, '2024-02-12 16:20:00', 'DELIVERED',  184.99, 'Valentina Moreno', NULL, 'Calle Tetuán 8, Sevilla', NULL, 'Sevilla', 'Sevilla', '41001', 'ES', '666000111', NULL),
+(11, '2024-03-17 11:55:00', 'SENDING', 145.00, 'Valentina Moreno', NULL, 'Avenida de la Constitución 1, Sevilla', NULL, 'Sevilla', 'Sevilla', '41001', 'ES', '666000111', NULL),
 -- javierjm (user 12)
-(12, '2024-01-18 09:30:00', 'ENTREGADO',  299.99, 'Javier Jiménez', NULL, 'Passeig de Gràcia 100, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666111000', NULL),
+(12, '2024-01-18 09:30:00', 'DELIVERED',  299.99, 'Javier Jiménez', NULL, 'Passeig de Gràcia 100, Barcelona', NULL, 'Barcelona', 'Barcelona', '08001', 'ES', '666111000', NULL),
 -- camilaa (user 13)
-(13, '2024-03-10 13:45:00', 'ENVIADO',    110.00, 'Camila Álvarez', NULL, 'Calle Preciados 3, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666222000', NULL),
+(13, '2024-03-10 13:45:00', 'SENDING',    110.00, 'Camila Álvarez', NULL, 'Calle Preciados 3, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666222000', NULL),
 -- sergioro (user 14)
-(14, '2024-02-07 15:10:00', 'ENTREGADO',  175.50, 'Sergio Romero', NULL, 'Gran Vía de Colón 10, Granada', NULL, 'Granada', 'Granada', '18001', 'ES', '666333000', NULL),
+(14, '2024-02-07 15:10:00', 'DELIVERED',  175.50, 'Sergio Romero', NULL, 'Gran Vía de Colón 10, Granada', NULL, 'Granada', 'Granada', '18001', 'ES', '666333000', NULL),
 -- miguelh (user 16)
-(16, '2024-03-21 10:25:00', 'PROCESANDO', 259.99, 'Miguel Herrera', NULL, 'Calle Marqués de Larios 1, Málaga', NULL, 'Málaga', 'Málaga', '29001', 'ES', '666444000', NULL);
+(16, '2024-03-21 10:25:00', 'SENDING', 259.99, 'Miguel Herrera', NULL, 'Calle Marqués de Larios 1, Málaga', NULL, 'Málaga', 'Málaga', '29001', 'ES', '666444000', NULL),
+-- nataliad (user 15)
+(15, '2024-02-18 14:50:00', 'DELIVERED',  169.00, 'Natalia Díaz', NULL, 'Paseo de la Castellana 45, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666555555', NULL),
+(15, '2024-03-25 10:15:00', 'SENDING', 95.00,  'Natalia Díaz', NULL, 'Calle Princesa 15, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666555555', NULL),
+-- isabellam (user 17)
+(17, '2024-01-28 16:20:00', 'DELIVERED',  245.50, 'Isabella Muñoz', NULL, 'Ronda de Atocha 8, Madrid', NULL, 'Madrid', 'Madrid', '28012', 'ES', '666666666', NULL),
+(17, '2024-03-08 13:00:00', 'SENDING', 125.00, 'Isabella Muñoz', NULL, 'Calle de Alcalá 25, Madrid', NULL, 'Madrid', 'Madrid', '28014', 'ES', '666666666', NULL),
+-- rodrigoc (user 18)
+(18, '2024-02-22 12:30:00', 'DELIVERED',  199.99, 'Rodrigo Castro', NULL, 'Avenida de América 10, Madrid', NULL, 'Madrid', 'Madrid', '28002', 'ES', '666777777', NULL),
+(18, '2024-03-12 15:45:00', 'SENDING', 115.50, 'Rodrigo Castro', NULL, 'Calle Serrano 88, Madrid', NULL, 'Madrid', 'Madrid', '28001', 'ES', '666777777', NULL);
 
 -- ============================================================
 -- ORDER ITEMS
@@ -210,72 +222,96 @@ INSERT INTO `orders` (`user_id`, `order_date`, `status`, `total_price`, `recipie
 --  SummitX 40=83 | Mudrunner 41=89 | StrikeForce 40=94 | Futsal 40=99
 -- ============================================================
 INSERT INTO `order_items` (`order_id`, `product_variant_id`, `quantity`, `price_at_purchase`, `product_name`, `product_size`, `product_image_url`, `base_price`, `price_modifier`) VALUES
--- Pedido 1: hugo - ENTREGADO
+-- Pedido 1: hugo - DELIVERED
 (1, 1,  1, 129.99, 'Swift Runner Pro', '40', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', 129.99, 0.0),
--- Pedido 2: hugo - PROCESANDO
+-- Pedido 2: hugo - SENDING
 (2, 29, 1, 110.00, 'Grit Master X', 'M', 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', 115.00, -5.0),
 (2, 42, 1,  85.50, 'Urban Glide', '40', 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400', 85.50, 0.0),
--- Pedido 3: hugo - ENVIADO
+-- Pedido 3: hugo - SENDING
 (3, 62, 1, 150.00, 'Elite Basketball', '42', 'https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=400', 150.00, 0.0),
--- Pedido 4: mgarcia - ENTREGADO
+-- Pedido 4: mgarcia - DELIVERED
 (4, 1,  1, 129.99, 'Swift Runner Pro', '40', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', 129.99, 0.0),
 (4, 57, 1,  92.00, 'Retro Wave', '40', 'https://images.unsplash.com/photo-1584735175315-9d5df23be7be?w=400', 92.00, 0.0),
 (4, 53, 1,  89.00, 'Drift Low', '40', 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400', 89.00, 0.0),  -- 264.99 aprox (con descuentos hipotéticos)
--- Pedido 5: mgarcia - CANCELADO
+-- Pedido 5: mgarcia - CANCELLED
 (5, 42, 1,  85.50, 'Urban Glide', '40', 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400', 85.50, 0.0),
--- Pedido 6: carlosmtz - ENTREGADO
+-- Pedido 6: carlosmtz - DELIVERED
 (6, 29, 1, 110.00, 'Grit Master X', 'M', 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', 115.00, -5.0),
 (6, 33, 1, 105.50, 'IronGrip Pro', 'M', 'https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=400', 110.50, -5.0),
--- Pedido 7: carlosmtz - PROCESANDO
+-- Pedido 7: carlosmtz - SENDING
 (7, 15, 1, 145.00, 'SpeedTrack Elite', '42', 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', 145.00, 0.0),
--- Pedido 8: laural - ENVIADO
+-- Pedido 8: laural - SENDING
 (8, 48, 1,  79.99, 'Neo Classic', '40', 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400', 79.99, 0.0),
 (8, 22, 1,  99.99, 'CloudRun Flex', '40', 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', 99.99, 0.0),
--- Pedido 9: laural - ENTREGADO
+-- Pedido 9: laural - DELIVERED
 (9, 22, 1,  99.99, 'CloudRun Flex', '40', 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', 99.99, 0.0),
--- Pedido 10: andres - PROCESANDO
+-- Pedido 10: andres - SENDING
 (10, 62, 1, 150.00, 'Elite Basketball', '42', 'https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=400', 150.00, 0.0),
 (10, 67, 1, 135.00, 'Court King Mid', '42', 'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?w=400', 135.00, 0.0),
 (10, 83, 1,  25.00, 'Summit X Low', '40', 'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400', 139.00, 0.0),  -- accesorio add-on
--- Pedido 11: andres - ENTREGADO
+-- Pedido 11: andres - DELIVERED
 (11, 77, 1, 159.99, 'TrailBlazer GTX', '41', 'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=400', 159.99, 0.0),
--- Pedido 12: sofiaf - ENVIADO
+-- Pedido 12: sofiaf - SENDING
 (12, 53, 1,  89.00, 'Drift Low', '40', 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400', 89.00, 0.0),
 (12, 48, 1,  79.99, 'Neo Classic', '40', 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400', 79.99, 0.0),
--- Pedido 13: sofiaf - ENTREGADO
+-- Pedido 13: sofiaf - DELIVERED
 (13, 33, 1, 105.50, 'IronGrip Pro', 'M', 'https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=400', 110.50, -5.0),
--- Pedido 14: pabloruiz - CANCELADO
+-- Pedido 14: pabloruiz - CANCELED
 (14, 83, 1, 139.00, 'Summit X Low', '40', 'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400', 139.00, 0.0),
--- Pedido 15: pabloruiz - ENTREGADO
+-- Pedido 15: pabloruiz - DELIVERED
 (15, 62, 1, 150.00, 'Elite Basketball', '42', 'https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=400', 150.00, 0.0),
 (15, 15, 1,  90.00, 'SpeedTrack Elite', '42', 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', 145.00, 0.0),
--- Pedido 16: elenat - PROCESANDO
+-- Pedido 16: elenat - SENDING
 (16, 53, 1,  89.00, 'Drift Low', '40', 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400', 89.00, 0.0),
--- Pedido 17: elenat - ENTREGADO
+-- Pedido 17: elenat - DELIVERED
 (17, 29, 2, 110.00, 'Grit Master X', 'M', 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', 115.00, -5.0),
 (17, 42, 1,  85.50, 'Urban Glide', '40', 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400', 85.50, 0.0),  -- 2x110 + 85.50 ≈ 305.50
--- Pedido 18: diegor - ENVIADO
+-- Pedido 18: diegor - SENDING
 (18, 1,  1, 129.99, 'Swift Runner Pro', '40', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', 129.99, 0.0),
 (18, 57, 1,  92.00, 'Retro Wave', '40', 'https://images.unsplash.com/photo-1584735175315-9d5df23be7be?w=400', 92.00, 0.0),
 (18, 48, 1,  79.99, 'Neo Classic', '40', 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400', 79.99, 0.0),  -- 301.98 aprox
--- Pedido 19: diegor - ENTREGADO
+-- Pedido 19: diegor - DELIVERED
 (19, 94, 1, 120.00, 'Strike Force FG', '40', 'https://images.unsplash.com/photo-1511886929837-354d827aae26?w=400', 120.00, 0.0),
--- Pedido 20: vale - ENTREGADO
+-- Pedido 20: vale - DELIVERED
 (20, 53, 1,  89.00, 'Drift Low', '40', 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400', 89.00, 0.0),
 (20, 48, 1,  79.99, 'Neo Classic', '40', 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400', 79.99, 0.0),
--- Pedido 21: vale - PROCESANDO
+-- Pedido 21: vale - SENDING
 (21, 15, 1, 145.00, 'SpeedTrack Elite', '42', 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', 145.00, 0.0),
--- Pedido 22: javierjm - ENTREGADO
+-- Pedido 22: javierjm - DELIVERED
 (22, 77, 1, 159.99, 'TrailBlazer GTX', '41', 'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=400', 159.99, 0.0),
 (22, 83, 1, 139.00, 'Summit X Low', '40', 'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400', 139.00, 0.0),
--- Pedido 23: camilaa - ENVIADO
+-- Pedido 23: camilaa - SENDING
 (23, 29, 1, 110.00, 'Grit Master X', 'M', 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', 115.00, -5.0),
--- Pedido 24: sergioro - ENTREGADO
+-- Pedido 24: sergioro - DELIVERED
 (24, 42, 1,  85.50, 'Urban Glide', '40', 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400', 85.50, 0.0),
 (24, 57, 1,  92.00, 'Retro Wave', '40', 'https://images.unsplash.com/photo-1584735175315-9d5df23be7be?w=400', 92.00, 0.0),
--- Pedido 25: miguelh - PROCESANDO
+-- Pedido 25: miguelh - SENDING
 (25, 1,  1, 129.99, 'Swift Runner Pro', '40', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', 129.99, 0.0),
-(25, 67, 1, 135.00, 'Court King Mid', '42', 'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?w=400', 135.00, 0.0);
+(25, 67, 1, 135.00, 'Court King Mid', '42', 'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?w=400', 135.00, 0.0),
+-- Pedido 26: admin - DELIVERED
+(26, 62, 1, 150.00, 'Elite Basketball', '42', 'https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=400', 150.00, 0.0),
+(26, 48, 1,  79.99, 'Neo Classic', '40', 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400', 79.99, 0.0),
+(26, 57, 1,  70.00, 'Retro Wave', '40', 'https://images.unsplash.com/photo-1584735175315-9d5df23be7be?w=400', 92.00, 0.0),
+-- Pedido 27: admin - SENDING
+(27, 29, 1, 110.00, 'Grit Master X', 'M', 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', 115.00, -5.0),
+(27, 22, 1,  79.50, 'CloudRun Flex', '40', 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', 99.99, 0.0),
+-- Pedido 28: nataliad - DELIVERED
+(28, 8,  1,  85.50, 'Urban Glide', '40', 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400', 85.50, 0.0),
+(28, 15, 1,  83.50, 'SpeedTrack Elite', '41', 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', 145.00, 0.0),
+-- Pedido 29: nataliad - SENDING
+(29, 7,  1,  95.00, 'FlexCore V2', 'M', 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400', 95.00, 0.0),
+-- Pedido 30: isabellam - DELIVERED
+(30, 12, 1, 150.00, 'Elite Basketball', '42', 'https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=400', 150.00, 0.0),
+(30, 10, 1,  89.00, 'Drift Low', '40', 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400', 89.00, 0.0),
+(30, 9,  1,  6.50,  'Neo Classic', '39', 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400', 79.99, 0.0),
+-- Pedido 31: isabellam - SENDING
+(31, 1,  1, 129.99, 'Swift Runner Pro', '40', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', 129.99, 0.0),
+-- Pedido 32: rodrigoc - DELIVERED
+(32, 19, 1,  99.99, 'Futsal Flash IN', '40', 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400', 89.99, 0.0),
+(32, 53, 1,  89.00, 'Drift Low', '40', 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400', 89.00, 0.0),
+(32, 48, 1,  11.00, 'Neo Classic', '38', 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400', 79.99, 0.0),
+-- Pedido 33: rodrigoc - SENDING
+(33, 11, 1, 115.50, 'Retro Wave', '40', 'https://images.unsplash.com/photo-1584735175315-9d5df23be7be?w=400', 92.00, 0.0);
 
 -- ============================================================
 -- FAVORITOS (35 registros en distintas combinaciones)

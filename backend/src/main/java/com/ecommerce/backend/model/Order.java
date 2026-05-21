@@ -54,9 +54,6 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "order", orphanRemoval = true)
     private List<OrderItem> orderItems;
 

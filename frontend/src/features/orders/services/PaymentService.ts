@@ -1,4 +1,4 @@
-import { getAuthHeaders } from '../../auth/utils/authUtils';
+import { getAuthHeaders, authFetch } from '../../auth/utils/authUtils';
 
 const API_URL = 'http://localhost:8080/api/payments';
 
@@ -19,7 +19,7 @@ export interface PaymentRequest {
 
 export const PaymentService = {
   createStripePaymentIntent: async (request: PaymentRequest): Promise<{ clientSecret: string }> => {
-    const response = await fetch(`${API_URL}/stripe/create-intent`, {
+    const response = await authFetch(`${API_URL}/stripe/create-intent`, {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(request),
@@ -28,7 +28,7 @@ export const PaymentService = {
   },
 
   createPayPalOrder: async (request: PaymentRequest): Promise<{ orderId: string; approveUrl?: string }> => {
-    const response = await fetch(`${API_URL}/paypal/create-order`, {
+    const response = await authFetch(`${API_URL}/paypal/create-order`, {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(request),
@@ -37,7 +37,7 @@ export const PaymentService = {
   },
 
   capturePayPalOrder: async (orderId: string): Promise<{ status: string }> => {
-    const response = await fetch(`${API_URL}/paypal/capture-order/${orderId}`, {
+    const response = await authFetch(`${API_URL}/paypal/capture-order/${orderId}`, {
       method: 'POST',
       headers: getAuthHeaders(),
     });

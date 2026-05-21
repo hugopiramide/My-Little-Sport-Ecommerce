@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import './Navbar.css'
 import { useEffect, useState, useCallback } from 'react'
 import { authService } from '../../../auth/services/AuthService'
-import { getCurrentUser, getCurrentUserId, getAuthHeaders } from '../../../auth/'
+import { getCurrentUser, getCurrentUserId, getAuthHeaders, authFetch } from '../../../auth/'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,7 +26,7 @@ const Navbar = () => {
       return
     }
     try {
-      const response = await fetch(`http://localhost:8080/api/carts/user/count`, {
+      const response = await authFetch(`http://localhost:8080/api/carts/user/count`, {
         headers: getAuthHeaders()
       })
       if (response.ok) {

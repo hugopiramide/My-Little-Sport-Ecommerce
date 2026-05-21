@@ -19,7 +19,17 @@ export const decodeToken = (token: string): TokenPayload | null => {
         console.error('Error decoding token:', e);
         return null;
     }
-};
+}
+
+export const isTokenExpired = (): boolean => {
+    const token = getToken()
+    if (!token) return true
+
+    const decoded = decodeToken(token)
+    if (!decoded || !decoded.exp) return true
+
+    return decoded.exp * 1000 < Date.now()
+}
 
 export const getCurrentUser = () => {
     const userData = sessionStorage.getItem('user')
@@ -58,7 +68,37 @@ export const getAuthHeaders = () => {
 }
 
 export const isUserLoggedIn = (): boolean => {
-    return getToken() !== null
+    if (sessionStorage.getItem("user") === null || sessionStorage.getItem("token") === null) {
+        return false;
+    }
+
+    if (isTokenExpired()) {
+        handleSessionExpired()
+        return false
+    }
+
+    return true
+}
+
+export const handleSessionExpired = () => {
+    sessionStorage.removeItem('user')
+    sessionStorage.removeItem('token')
+}
+
+export const authFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+    if (isTokenExpired()) {
+        handleSessionExpired()
+        throw new Error('Session expired. Please log in again.')
+    }
+
+    const response = await fetch(input, init)
+
+    if (response.status === 401) {
+        handleSessionExpired()
+        throw new Error('Session expired. Please log in again.')
+    }
+
+    return response
 }
 
 export const validatePassword = (password: string): { isValid: boolean; message?: string } => {

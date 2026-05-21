@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import './PageNotFound.css'
 
 const PageNotFound = () => {
   return (
@@ -8,14 +9,14 @@ const PageNotFound = () => {
           <h1 className="display-1 fw-black text-uppercase italic mb-0" style={{ letterSpacing: '-2px', fontWeight: 900 }}>
             404
           </h1>
-          <h2 className="display-5 fw-bold text-uppercase mb-4">Has salido de la pista.</h2>
+          <h2 className="display-5 fw-bold text-uppercase mb-4">You've gone off track.</h2>
           <p className="lead mb-5 text-secondary">
-            Incluso los mejores atletas pierden el rumbo. <br /> 
-            Regresa al juego y sigue intentándolo.
+            Even the best athletes lose their way. <br /> 
+            Get back in the game and keep pushing.
           </p>
           
-          <Link to="/" className="btn btn-dark btn-lg rounded-pill px-5 py-3 fw-bold text-uppercase shadow-sm">
-            Volver al inicio
+          <Link to="/" className="btn-dark-custom d-inline-block text-decoration-none">
+            Back to Home
           </Link>
           
         </div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import "./ErrorPage.css"
 
 const ErrorPage = () => {
   return (
@@ -9,25 +10,25 @@ const ErrorPage = () => {
             <span className="badge rounded-pill bg-danger px-3 py-2 text-uppercase mb-3">Technical Foul</span>
           </div>
           <h1 className="display-3 fw-black text-uppercase mb-3" style={{ fontWeight: 900 }}>
-            Algo detuvo el juego.
+            Something stopped the game.
           </h1>
           <p className="fs-5 mb-5 text-secondary" style={{ maxWidth: '600px', margin: '0 auto' }}>
-            Estamos ajustando la estrategia para que vuelvas a la acción lo antes posible. 
-            El rendimiento es nuestra prioridad.
+            We're adjusting the strategy to get you back in action as soon as possible.
+            Performance is our priority.
           </p>
           
           <div className="d-flex flex-column flex-sm-row justify-content-center gap-3">
             <button 
               onClick={() => window.location.reload()} 
-              className="btn btn-light btn-lg rounded-pill px-5 py-3 fw-bold text-uppercase"
+              className="btn-light-custom"
             >
-              Reintentar el juego
+              Retry Game
             </button>
             <Link 
               to="/" 
-              className="btn btn-outline-light btn-lg rounded-pill px-5 py-3 fw-bold text-uppercase"
+              className="btn-outline-light-custom"
             >
-              Volver al inicio
+              Back to Home
             </Link>
           </div>
         </div>

@@ -5,6 +5,7 @@ import com.ecommerce.backend.service.PayPalService;
 import com.ecommerce.backend.service.StripeService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.checkout.Session;
 import com.paypal.orders.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,21 @@ public class PaymentController {
             PaymentIntent paymentIntent = stripeService.createPaymentIntent(request);
             Map<String, String> response = new HashMap<>();
             response.put("clientSecret", paymentIntent.getClientSecret());
+            return ResponseEntity.ok(response);
+        } catch (StripeException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
+    @PostMapping("/stripe/create-checkout-session")
+    public ResponseEntity<Map<String, String>> createStripeCheckoutSession(@RequestBody PaymentRequestDTO request) {
+        try {
+            Session session = stripeService.createCheckoutSession(request);
+            Map<String, String> response = new HashMap<>();
+            response.put("sessionId", session.getId());
+            response.put("checkoutUrl", session.getUrl());
             return ResponseEntity.ok(response);
         } catch (StripeException e) {
             Map<String, String> errorResponse = new HashMap<>();

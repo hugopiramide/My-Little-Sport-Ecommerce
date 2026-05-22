@@ -12,7 +12,8 @@ public record OrderRequestDTO(
     @NotNull(message = "Status is required")
     OrderStatus status,
 
-    double total_price,
+    @NotNull(message = "Total price is required")
+    Double total_price,
 
     @NotNull(message = "Shipping address is required")
     ShippingAddressDTO shippingAddress

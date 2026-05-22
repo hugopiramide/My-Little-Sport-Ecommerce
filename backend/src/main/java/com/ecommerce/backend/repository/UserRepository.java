@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-    // Solved Problem with redundant Query
     @EntityGraph(attributePaths = {"cart"})
     Optional<User> findByPersonalDataUsername(String username);
 

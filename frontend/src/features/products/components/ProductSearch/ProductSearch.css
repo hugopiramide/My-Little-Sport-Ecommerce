@@ -1,0 +1,9 @@
+#results-list a:hover .list-group-item {
+    transition: all 0.3s ease;
+    background-color: black;
+    color: white;
+}
+
+#results-list a:hover .text-muted {
+    color: #e0e0e0;
+}

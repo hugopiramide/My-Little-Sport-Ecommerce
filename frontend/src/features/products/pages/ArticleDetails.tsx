@@ -6,6 +6,10 @@ import { isUserLoggedIn, getCurrentUserId } from '../../auth/utils/authUtils'
 import { ReviewService } from "../services/ReviewService"
 import { ProductReviews } from "../components/ProductReviews/ProductReviews"
 import type { ProductReviewResponseDTO } from "../../shared/types"
+import { FavoriteService } from '../../shared/services/FavoriteService'
+import { Heart, HeartFill } from 'react-bootstrap-icons'
+import { useEffect } from 'react'
+
 const loader: LoaderFunction = async ({ params }) => {
   const response = await fetch(`http://localhost:8080/api/products/${params.articleId}`)
   const product = await response.json()
@@ -29,6 +33,9 @@ const ArticleDetails = () => {
   const [quantity, setQuantity] = useState<number>(1)
   const [isAdding, setIsAdding] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false)
+  const [favoriteId, setFavoriteId] = useState<number | null>(null)
+  const [isFavoriteLoading, setIsFavoriteLoading] = useState(false)
   
   const product = useLoaderData() as ProductResponseDTO & { variants?: ProductVariantResponseDTO[], reviews?: ProductReviewResponseDTO[] }
 
@@ -59,6 +66,51 @@ const ArticleDetails = () => {
     } finally {
       setIsAdding(false)
     }
+  }
+
+  useEffect(() => {
+    const checkFavorite = async () => {
+      const userId = getCurrentUserId()
+      if (userId && product?.id) {
+        const favorites = await FavoriteService.getUserFavorites(userId)
+        const fav = favorites.find(f => f.productId === product.id)
+        if (fav) {
+          setIsFavorite(true)
+          setFavoriteId(fav.id)
+        }
+      }
+    }
+    checkFavorite()
+  }, [product?.id])
+
+  const handleToggleFavorite = async () => {
+    const userId = getCurrentUserId()
+    if (!userId) {
+      alert('Please log in to add to favorites')
+      return
+    }
+
+    if (isFavoriteLoading) return
+    setIsFavoriteLoading(true)
+
+    if (isFavorite && favoriteId) {
+      const success = await FavoriteService.removeFavorite(favoriteId)
+      if (success) {
+        setIsFavorite(false)
+        setFavoriteId(null)
+      }
+    } else {
+      const result = await FavoriteService.addFavorite({
+        user_id: userId,
+        product_id: product.id,
+        notify_when_in_stock: true
+      })
+      if (result) {
+        setIsFavorite(true)
+        setFavoriteId(result.id)
+      }
+    }
+    setIsFavoriteLoading(false)
   }
 
   if (!product) {
@@ -184,8 +236,13 @@ const ArticleDetails = () => {
                 </Link>
               )}
               
-              <button className="btn-custom w-100 py-3">
-                Add to Favorites
+              <button 
+                className={`btn-custom w-100 py-3 d-flex justify-content-center align-items-center gap-2 ${isFavorite ? 'border-danger text-danger' : ''}`}
+                onClick={handleToggleFavorite}
+                disabled={isFavoriteLoading}
+              >
+                {isFavorite ? <HeartFill className="text-danger" /> : <Heart />}
+                {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
               </button>
             </div>
 

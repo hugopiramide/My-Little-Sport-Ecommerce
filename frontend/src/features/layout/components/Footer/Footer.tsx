@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container">
         <div className="row g-5">
           <div className="col-lg-4">
-            <Link to="/" className="fw-black mb-3 tracking-tight-15">MYLITTLESPORT</Link>
+            <h3 className="fw-black mb-3 tracking-tight-15">MYLITTLESPORT</h3>
             <p className="text-muted max-w-300">
               Your favorite sports store for sneaker lovers and premium equipment.
             </p>
@@ -33,9 +33,9 @@ const Footer = () => {
             <h5 className="fw-bold mb-4 text-uppercase small">Social Media</h5>
             <p className="text-muted small mb-4">Follow us to stay up to date with the latest news.</p>
             <div className="d-flex gap-4 justify-content-lg-end">
-              <a href="#" className="text-dark"><Instagram size={24} /></a>
-              <a href="https://www.linkedin.com/in/hugo-del-castillo-deus" target='_blank' className="text-dark"><Linkedin size={24} /></a>
-              <a href="https://github.com/hugopiramide" className="text-dark" target='_blank'><Github size={24} /></a>
+              <a aria-label="Instagram" href="https://www.instagram.com/hugocaastillo" target='_blank' className="text-dark"><Instagram size={24} /></a>
+              <a aria-label="LinkedIn" href="https://www.linkedin.com/in/hugo-del-castillo-deus" target='_blank' className="text-dark"><Linkedin size={24} /></a>
+              <a aria-label="GitHub" href="https://github.com/hugopiramide" className="text-dark" target='_blank'><Github size={24} /></a>
             </div>
           </div>
         </div>

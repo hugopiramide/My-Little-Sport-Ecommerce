@@ -61,7 +61,7 @@ const Navbar = () => {
               <ProductSearch />
             </div>
 
-            <Link to="/cart" className="btn btn-link text-black p-1 position-relative" onClick={() => setIsOpen(false)}>
+            <Link aria-label='Shopping Cart' to="/cart" className="btn btn-link text-black p-1 position-relative" onClick={() => setIsOpen(false)}>
               <Bag size={24} />
               {cartCount > 0 && (
                 <span id="bag-count" className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
@@ -120,7 +120,7 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <Link to="/login" className="d-flex align-items-center text-black" onClick={() => setIsOpen(false)}>
+              <Link aria-label='Login' to="/login" className="d-flex align-items-center text-black" onClick={() => setIsOpen(false)}>
                 <Person size={28} />
               </Link>
             )}

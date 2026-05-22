@@ -8,15 +8,13 @@ interface ProductsProps {
 
 const CardList:React.FC<ProductsProps> = ({products}) => {
     return (
-        <div className="container my-5">
+        <section className="container my-5">
             <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
                 {products.map((product) => (
-                <div className="col" key={product.id}>
-                    <Card {...product} />
-                </div>
+                    <Card {...product} key={product.id} />
                 ))}
             </div>
-        </div>
+        </section>
     )
 }
 

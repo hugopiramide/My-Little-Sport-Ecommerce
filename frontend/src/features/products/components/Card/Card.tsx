@@ -63,7 +63,7 @@ const Card: React.FC<ProductResponseDTO> = ({ id, name, categoryName, basePrice,
     
     if(!active) {
         return (
-            <div className="product-card unavailable">
+            <article aria-label={`${name} is unavailable`} className="product-card unavailable">
                 <div className="product-card-image-wrapper">
                     <img src={imageUrl} className="product-card-image grayscale" alt={name} />
                     <div className="unavailable-overlay">
@@ -71,16 +71,16 @@ const Card: React.FC<ProductResponseDTO> = ({ id, name, categoryName, basePrice,
                     </div>
                 </div>
                 <div className="product-card-info opacity-50">
-                    <h3 className="product-card-title">{name}</h3>
-                    <p className="product-card-category">{categoryName}</p>
+                    <h2 className="product-card-title">{name}</h2>
+                    <h3 className="product-card-category">{categoryName}</h3>
                 </div>
-            </div>
+            </article>
         )
     }
     
     return (
-        <div className="product-card">
-            <Link to={`/articles/${id}`} className="product-card-link">
+        <article className="col product-card">
+            <Link aria-label={`View details for ${name}`} to={`/articles/${id}`} className="product-card-link">
                 <div className="product-card-image-wrapper">
                     <img
                         src={imageUrl}
@@ -101,13 +101,13 @@ const Card: React.FC<ProductResponseDTO> = ({ id, name, categoryName, basePrice,
 
                 <div className="product-card-info">
                     <div className="product-card-header">
-                        <h3 className="product-card-title">{name}</h3>
+                        <h2 className="product-card-title">{name}</h2>
                         <span className="product-card-price">{formatPrice(basePrice)}</span>
                     </div>
-                    <p className="product-card-category">{categoryName}</p>
+                    <h3 className="product-card-category">{categoryName}</h3>
                 </div>
             </Link>
-        </div>
+        </article>
     )
 }
 

@@ -1,16 +1,17 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useShoppingCart } from '../hooks/useShoppingCart'
+import { useFavorites } from '../hooks/useFavorites'
 import { Link } from 'react-router-dom';
+import { getCurrentUserId } from '../../auth/utils/authUtils'
 
 const formatPrice = (amount: number) => {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(amount)
 }
 
-import { getCurrentUserId } from '../../auth/utils/authUtils'
-
 export const ShoppingCart: React.FC = () => {
   const userId = getCurrentUserId()
   const { cart, loading, removeItem, addToCart } = useShoppingCart(userId || 0)
+  const { favoriteProducts, loading: favoritesLoading } = useFavorites(userId || 0)
 
   const calculateTotal = () => {
     if (!cart?.cartItems) return 0
@@ -131,9 +132,52 @@ export const ShoppingCart: React.FC = () => {
                 </article>
               )
             })}
+
+            <section className="mt-5">
+              <div className="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                  <h2 className="fw-black text-uppercase mb-0">Favorites</h2>
+                  <p className="text-muted small mb-0">Your saved favorite products.</p>
+                </div>
+              </div>
+
+              {favoritesLoading ? (
+                <div className="d-flex justify-content-center py-4">
+                  <div className="spinner-border text-dark" role="status"></div>
+                </div>
+              ) : favoriteProducts.length > 0 ? favoriteProducts.map((item) => (
+                <article key={item.favoriteId} className="row py-4 border-bottom g-0">
+                  <div className="col-4 col-md-3">
+                    <Link to={`/articles/${item.product.id}`}>
+                      <div className="bg-secondary-custom overflow-hidden aspect-square rounded-5px">
+                        <img
+                          src={item.product.imageUrl}
+                          alt={item.product.name}
+                          className="w-100 h-100 object-fit-cover hover-zoom"
+                        />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="col-8 col-md-9 ps-3 ps-md-4 d-flex flex-column">
+                    <div className="d-flex justify-content-between align-items-start">
+                      <div>
+                        <Link to={`/articles/${item.product.id}`} className="text-decoration-none text-dark">
+                          <h3 className="fw-bold mb-1 text-uppercase product-title-hover">{item.product.name}</h3>
+                        </Link>
+                        <p className="mb-1">{item.product.categoryName}</p>
+                      </div>
+                      <p className="fw-bold">{formatPrice(item.product.basePrice || 0)}</p>
+                    </div>
+                  </div>
+                </article>
+              )) : (
+                <p className="text-muted">No favorite products saved yet.</p>
+              )}
+            </section>
           </div>
 
-          <div className="col-lg-4">
+          <div className="col-lg-4 z-1">
             <div className="sticky-top top-120">
               <h1 className="fw-black text-uppercase mb-5">SUMMARY</h1>
 
@@ -157,13 +201,9 @@ export const ShoppingCart: React.FC = () => {
               <hr className="my-4 opacity-10" />
 
               <div className="d-grid gap-2">
-                <button className="btn-dark-custom w-100 py-3">
+                <Link to="/checkout" className="btn-dark-custom w-100 py-3 text-center text-decoration-none">
                   CHECKOUT
-                </button>
-
-                <button className="btn-custom w-100 py-3 d-flex align-items-center justify-content-center gap-2">
-                  <span className="fw-bold">PAYPAL</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>

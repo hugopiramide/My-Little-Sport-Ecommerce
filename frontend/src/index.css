@@ -2,7 +2,7 @@
   --main-color: #FFFFFF;
   --main-txt-color: #221E1F;
   --secondary-color: #F3F3F3;
-  --info-color: #A9A9A9;
+  --info-color: #656565;
   --btn-border-radius: 5px;
   --transition-speed: 0.3s;
 }
@@ -154,10 +154,11 @@ a:hover {
 }
 
 #homePicture {
-  height: 80vh;
+  height: 90vh;
   object-fit: cover;
 }
 
+.h-90vh { height: 90vh; }
 .h-85vh { height: 85vh; }
 .h-700 { height: 700px; }
 .h-600 { height: 600px; }
@@ -323,4 +324,37 @@ a:hover {
   font-weight: 400;
   letter-spacing: -1.5px;
   color: var(--main-txt-color);
+}
+
+.hero-bg-video {
+    height: 90vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+@keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.home-hero__eyebrow {
+    letter-spacing: 0.25em;
+    font-size: 12px;
+    opacity: 0.65;
+    animation: fadeSlideDown 0.9s ease both;
+}
+
+.home-hero__title {
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    letter-spacing: -3px;
+    line-height: 1;
+    animation: fadeSlideDown 0.9s 0.15s ease both;
+    padding-bottom: 20px;
+}
+
+.w-42px { 
+  width: 42px; 
+}
+.h-42px { 
+  height: 42px; 
 }

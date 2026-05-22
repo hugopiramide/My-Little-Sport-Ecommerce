@@ -62,7 +62,7 @@ const VerifyEmail = () => {
   }
 
   return (
-    <div className="container-fluid min-vh-100 bg-white d-flex flex-column align-items-center justify-content-center py-5">
+    <main className="container-fluid min-vh-100 bg-white d-flex flex-column align-items-center justify-content-center py-5">
       <div className="row w-100 justify-content-center px-3">
         <div className="col-12 col-md-8 col-lg-5 col-xl-4 text-center">
           <Link to="/" className="d-inline-block mb-5 no-underline text-black hover:opacity-80 transition-opacity">
@@ -71,7 +71,7 @@ const VerifyEmail = () => {
             </h3>
           </Link>
 
-          <h1 className="h2 uppercase mb-2">
+          <h1 className="uppercase mb-2">
             Verify your email
           </h1>
           <p className="text-muted mb-5 font-medium">We have sent a 6-digit code to your email.</p>
@@ -82,7 +82,7 @@ const VerifyEmail = () => {
             </div>
           )}
 
-          <p className="fs-10 text-muted mb-4 uppercase tracking-widest font-bold">
+          <p className="text-muted mb-4 uppercase font-bold">
             Sent to: <span className="text-dark">{email || 'your email'}</span>
           </p>
 
@@ -132,15 +132,15 @@ const VerifyEmail = () => {
 
           <div className="mt-5 pt-5 border-top border-light text-center">
             <Link
-              to="/register"
-              className="text-muted small fw-bold text-uppercase tracking-widest transition-colors flex items-center justify-center gap-2 no-underline"
+              to={'/'}
+              className="text-dark small fw-bold text-decoration-underline"
             >
-              <span>←</span> Back to Registration
+              Back to home
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

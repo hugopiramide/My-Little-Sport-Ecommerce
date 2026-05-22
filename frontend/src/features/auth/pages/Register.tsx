@@ -108,7 +108,7 @@ const Register = () => {
   }
 
   return (
-    <div className="container-fluid min-vh-100 bg-white d-flex flex-column align-items-center justify-content-center py-5">
+    <main className="container-fluid min-vh-100 bg-white d-flex flex-column align-items-center justify-content-center py-5">
       <div className="row w-100 justify-content-center px-3">
         <div className="col-12 col-md-8 col-lg-5 col-xl-4 text-center">
           <Link to="/" className="d-inline-block mb-4 no-underline text-black hover:opacity-80 transition-opacity">
@@ -251,7 +251,7 @@ const Register = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

@@ -15,6 +15,9 @@ export interface PaymentRequest {
   currency: string;
   description: string;
   orderId: number;
+  successUrl?: string;
+  cancelUrl?: string;
+  items?: Array<{ name: string; description?: string; unitAmount: number; quantity: number; imageUrl?: string }>;
 }
 
 export const PaymentService = {
@@ -25,6 +28,16 @@ export const PaymentService = {
       body: JSON.stringify(request),
     });
     return handleResponse<{ clientSecret: string }>(response);
+  },
+
+  createStripeCheckoutSession: async (request: PaymentRequest): Promise<{ sessionId: string; checkoutUrl?: string }> => {
+    const response = await authFetch(`${API_URL}/stripe/create-checkout-session`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(request),
+    });
+
+    return handleResponse<{ sessionId: string; checkoutUrl?: string }>(response);
   },
 
   createPayPalOrder: async (request: PaymentRequest): Promise<{ orderId: string; approveUrl?: string }> => {

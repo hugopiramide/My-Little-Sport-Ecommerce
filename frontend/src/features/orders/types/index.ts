@@ -1,6 +1,6 @@
 import type { ShippingAddressDTO } from '../../shared/types';
 
-export type OrderStatus = 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
+export type OrderStatus = 'PENDING' | 'SENDING' | 'DELIVERED' | 'CANCELED';
 
 export interface OrderRequestDTO {
   user_id: number;
@@ -18,6 +18,7 @@ export interface OrderResponseDTO {
   userId: number;
   userName: string;
   userEmail: string;
+  items: OrderItemResponseDTO[];
 }
 
 export interface OrderItemResponseDTO {

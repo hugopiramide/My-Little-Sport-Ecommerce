@@ -1,4 +1,4 @@
-export type OrderStatus = 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
+export type OrderStatus = 'PENDING' | 'SENDING' | 'DELIVERED' | 'CANCELED';
 export type ReviewStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 
 export interface PaymentRequestDTO {
@@ -9,6 +9,7 @@ export interface PaymentRequestDTO {
 }
 
 export interface ShippingAddressDTO {
+  addressName?: string;
   recipientName: string;
   companyName: string;
   street: string;
@@ -24,7 +25,7 @@ export interface ShippingAddressDTO {
 // Auth
 export interface LoginRequest {
   username: string;
-  password?: string;
+  password: string;
 }
 
 export interface RegisterRequest {
@@ -34,15 +35,17 @@ export interface RegisterRequest {
   email: string;
   birthday: string | Date;
   profileImgUrl?: string;
-  password?: string;
+  password: string;
 }
 
 export interface UserDTO {
-  id: number;
   username: string;
-  email: string;
-  role: string;
+  name: string;
+  surname: string;
+  profileImgUrl?: string | null;
+  birthday?: string | null;
   emailVerified: boolean;
+  email: string;
   requiresVerification: boolean;
   verificationExpiresInSeconds: number;
 }

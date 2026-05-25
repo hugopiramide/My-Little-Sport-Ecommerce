@@ -1,30 +1,48 @@
-import React from 'react';
-import { Search } from 'react-bootstrap-icons';
+import React, { useState } from 'react'
+import { Search, XCircleFill } from 'react-bootstrap-icons'
 
 interface ProductFiltersProps {
-  onSearch: (query: string) => void;
-  onFilterChange: (filterId: string, value: string) => void;
+  queryValue: string
+  onSearch: (query: string) => void
+  onResetQuery: () => void
+  onFilterChange: (filterId: string, value: string) => void
 }
 
-const ProductFilters: React.FC<ProductFiltersProps> = ({ onSearch, onFilterChange }) => {
+const ProductFilters: React.FC<ProductFiltersProps> = ({ queryValue, onSearch, onResetQuery, onFilterChange }) => {
+  const [isFocused, setIsFocused] = useState(false)
+
   return (
     <div className="row g-3 mb-5 align-items-center">
-      <div className="col-12 col-md-6 col-lg-4">
-        <div className="input-group border rounded border-custom rounded-5px">
+      <div className="col-12 col-md-6 col-lg-4 d-flex align-items-center gap-2">
+        <div className="input-group border rounded border-custom rounded-5px flex-grow-1 position-relative">
           <span className="input-group-text bg-white border-0 ps-3">
             <Search className="text-muted" size={18} />
           </span>
           <input
             type="text"
-            className="form-control border-0 py-2 shadow-none rounded-5px"
+            className="form-control border-0 py-2 shadow-none rounded-5px pe-5"
             placeholder="Search products..."
+            value={queryValue}
             onChange={(e) => onSearch(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
+          {queryValue.length > 0 && !isFocused && (
+            <button
+              type="button"
+              className="btn btn-link position-absolute end-0 top-50 translate-middle-y pe-3 text-muted border-0 shadow-none"
+              onClick={onResetQuery}
+              aria-label="Clear search query"
+            >
+              <XCircleFill size={16} />
+            </button>
+          )}
         </div>
       </div>
 
       <div className="col-6 col-md-3 col-lg-2">
         <select 
+          aria-label='Category'
           className="form-select form-select-custom shadow-none"
           onChange={(e) => onFilterChange('filter1', e.target.value)}
           defaultValue=""
@@ -42,6 +60,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ onSearch, onFilterChang
 
       <div className="col-6 col-md-3 col-lg-2">
         <select 
+          aria-label='Price'
           className="form-select form-select-custom shadow-none"
           onChange={(e) => onFilterChange('filter2', e.target.value)}
           defaultValue=""
@@ -52,7 +71,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ onSearch, onFilterChang
         </select>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductFilters;
+export default ProductFilters

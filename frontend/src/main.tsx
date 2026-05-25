@@ -21,6 +21,7 @@ import Gallery from './features/shared/pages/Gallery/Gallery.tsx'
 import Profile from './features/shared/pages/Profile/Profile.tsx'
 import Checkout from './features/orders/pages/Checkout.tsx'
 import OrderSuccess from './features/orders/pages/OrderSuccess.tsx'
+import { ContactUs } from './features/shared'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -81,6 +82,11 @@ const router = createBrowserRouter([
         element: <Gallery />,
       }
     ]
+  },
+  {
+    path: 'contact-us',
+    element: <ContactUs />,
+    errorElement: <ErrorPage />,
   },
   {
     path: 'register',

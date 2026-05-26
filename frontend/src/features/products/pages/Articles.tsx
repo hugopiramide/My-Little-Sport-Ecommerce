@@ -18,6 +18,7 @@ const loader: LoaderFunction = async ({ request }) => {
 const Articles = () => {
   const productsPage = useLoaderData() as Page<ProductResponseDTO>
   const [searchParams, setSearchParams] = useSearchParams()
+  const query = searchParams.get("query") || ""
 
   const { _embedded, page: pageData } = productsPage
   const content = _embedded?.productResponseDTOList || []
@@ -67,12 +68,14 @@ const Articles = () => {
     <div className="container py-5">
       <header className="row mb-5 align-items-end">
         <div className="col">
-          <h1 className="mb-0">Products</h1>
+          <h1 className="mt-2 mb-0">PRODUCTS</h1>
         </div>
       </header>
 
       <ProductFilters 
+        queryValue={query}
         onSearch={handleSearch} 
+        onResetQuery={() => handleSearch("")}
         onFilterChange={handleFilterChange} 
       />
 
@@ -83,42 +86,46 @@ const Articles = () => {
             <p className="fs-4 mt-3 text-secondary">No products found.</p>
           </div>
         ) : (
-          <div className="row g-4"> 
-            <CardList products={content} />
-          </div>
+          <CardList products={content} />
         )}
       </main>
 
       {totalPages > 1 && (
-        <nav aria-label="Product navigation" className="mt-5 pt-4 border-top">
-          <div className="d-flex align-items-center justify-content-between">
-            
+        <nav aria-label="Product navigation" className="mt-3 pt-4 mb-3">
+          <div className="d-flex justify-content-center gap-2">
             <button 
-              className={`btn btn-custom d-flex align-items-center gap-2 ${first ? 'opacity-30' : ''}`}
+              className={`btn ${first ? 'btn-dark-custom border opacity-50' : 'btn-dark-custom'} px-4 py-2 text-uppercase fw-bold`}
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={first}
             >
-              <i className="bi bi-arrow-left"></i>
-              <span className="d-none d-sm-inline">Previous</span>
+              Prev
             </button>
-
-            <div className="text-center">
-              <span className="fw-light text-muted small uppercase tracking-wider">
-                PAGE 
-                <span className="fw-bold text-dark mx-2">{currentPage + 1}</span> 
-                OF {totalPages}
-              </span>
+            
+            <div className="d-none d-md-flex gap-2">
+              {Array.from({ length: totalPages }).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handlePageChange(idx)}
+                  className={`btn ${idx === currentPage ? 'btn-dark-custom' : 'btn-custom'} fw-bold d-flex align-items-center justify-content-center w-42px h-42px p-0`}
+                >
+                  {idx + 1}
+                </button>
+              ))}
             </div>
 
             <button 
-              className={`btn btn-custom d-flex align-items-center gap-2 ${last ? 'opacity-30' : ''}`}
+              className={`btn ${last ? 'btn-dark-custom border opacity-50' : 'btn-dark-custom'} px-4 py-2 text-uppercase fw-bold`}
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={last}
             >
-              <span className="d-none d-sm-inline">Next</span>
-              <i className="bi bi-arrow-right"></i>
+              Next
             </button>
-
+          </div>
+          
+          <div className="text-center mt-4 d-md-none">
+            <span className="text-muted small fw-bold tracking-wider text-uppercase">
+              Page {currentPage + 1} of {totalPages}
+            </span>
           </div>
         </nav>
       )}

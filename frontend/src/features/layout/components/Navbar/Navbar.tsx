@@ -103,9 +103,9 @@ const Navbar = () => {
                   <div className="profile-dropdown animate__animated animate__fadeIn">
                     <ul className="list-unstyled mb-0">
                       <li><Link to="/profile" className="dropdown-item-custom" onClick={() => setIsProfileOpen(false)}>Profile</Link></li>
+                      <li><Link to="/order-history" className="dropdown-item-custom" onClick={() => setIsProfileOpen(false)}>Order History</Link></li>
                       <li><Link to="/cart" className="dropdown-item-custom" onClick={() => setIsProfileOpen(false)}>Cart Items</Link></li>
-                      <li><Link to="#" className="dropdown-item-custom" onClick={() => setIsProfileOpen(false)}>Favorites</Link></li>
-                      <li><Link to="#" className="dropdown-item-custom" onClick={() => setIsProfileOpen(false)}>Shipping & Delivery</Link></li>
+                      <li><Link to="/cart" className="dropdown-item-custom" onClick={() => setIsProfileOpen(false)}>Favorites</Link></li>
                       <li><Link to="/about-us" className="dropdown-item-custom" onClick={() => setIsProfileOpen(false)}>About Us</Link></li>
                       <li>
                         <button 

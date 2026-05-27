@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecommerce.backend.dto.request.ProductVariantRequestDTO;
 import com.ecommerce.backend.dto.response.ProductVariantResponseDTO;
+import com.ecommerce.backend.exception.InsufficientStockException;
 import com.ecommerce.backend.mapper.ProductVariantMapper;
 import com.ecommerce.backend.model.ProductVariant;
 import com.ecommerce.backend.repository.ProductVariantRepository;
@@ -83,5 +84,16 @@ public class ProductVariantServiceImpl extends BaseCrudServiceImpl<ProductVarian
     public List<ProductVariantResponseDTO> findByFilters(Long productId, Long stockMin, Long stockMax, String size) {
         List<ProductVariant> variants = ((ProductVariantRepository) repository).findByFilters(productId, stockMin, stockMax, size);
         return toDtoList(variants);
+    }
+
+    @Override
+    @Transactional
+    public void deleteStock(Long id, Long quantity) {
+        ProductVariant variant = findEntityById(id);
+        if (variant.getStock() < quantity) {
+            throw new InsufficientStockException("Not enough stock for product variant with id " + id);
+        }
+        variant.setStock(variant.getStock() - quantity);
+        repository.save(variant);   
     }
 }

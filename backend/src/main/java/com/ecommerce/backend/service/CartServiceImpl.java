@@ -144,6 +144,14 @@ public class CartServiceImpl extends BaseCrudServiceImpl<Cart, CartResponseDTO, 
     public void clearCart(Long userId) {
         Cart cart = ((CartRepository) repository).findByUserId(userId).orElse(null);
         if (cart != null) {
+            try {
+            cart.getCartItems().forEach(item -> {
+                ProductVariant variant = item.getProductVariant();
+                productVariantService.deleteStock(variant.getId(), item.getQuantity());
+            });
+            } catch (Exception e) {
+                throw new InsufficientStockException("Failed to clear cart");
+            }
             cart.getCartItems().clear();
             cart.setUpdate_at(LocalDateTime.now());
             repository.save(cart);

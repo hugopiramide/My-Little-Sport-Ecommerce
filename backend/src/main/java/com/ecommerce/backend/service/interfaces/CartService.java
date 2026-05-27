@@ -7,4 +7,5 @@ import com.ecommerce.backend.dto.response.CartResponseDTO;
 public interface CartService extends BaseCrudService<CartResponseDTO, CartRequestDTO, CartRequestDTO, Long> {
     CartResponseDTO addItem(Long userId, CartItemsRequestDTO itemDto);
     CartResponseDTO findByUserId(Long userId);
+    void clearCart(Long userId);
 }

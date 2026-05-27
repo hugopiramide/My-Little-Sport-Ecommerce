@@ -48,4 +48,10 @@ public class CartController extends BaseRestController<CartResponseDTO, CartRequ
         }
         return ResponseEntity.ok(count);
     }
+
+    @DeleteMapping("/user/{userId}/clear")
+    public ResponseEntity<Void> clearCartByUserId(@PathVariable Long userId) {
+        cartService.clearCart(userId);
+        return ResponseEntity.noContent().build();
+    }
 }

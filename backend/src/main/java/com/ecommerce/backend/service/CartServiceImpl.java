@@ -138,4 +138,15 @@ public class CartServiceImpl extends BaseCrudServiceImpl<Cart, CartResponseDTO, 
     protected void afterUpdate(CartRequestDTO dto, Cart entity) {
         entity.setUpdate_at(LocalDateTime.now());
     }
+
+    @Override
+    @Transactional
+    public void clearCart(Long userId) {
+        Cart cart = ((CartRepository) repository).findByUserId(userId).orElse(null);
+        if (cart != null) {
+            cart.getCartItems().clear();
+            cart.setUpdate_at(LocalDateTime.now());
+            repository.save(cart);
+        }
+    }
 }

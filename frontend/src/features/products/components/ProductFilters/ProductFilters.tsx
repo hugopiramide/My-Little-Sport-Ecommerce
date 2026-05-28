@@ -9,7 +9,6 @@ interface ProductFiltersProps {
 }
 
 const ProductFilters: React.FC<ProductFiltersProps> = ({ queryValue, onSearch, onResetQuery, onFilterChange }) => {
-  const [isFocused, setIsFocused] = useState(false)
 
   return (
     <div className="row g-3 mb-5 align-items-center">
@@ -24,10 +23,8 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ queryValue, onSearch, o
             placeholder="Search products..."
             value={queryValue}
             onChange={(e) => onSearch(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
           />
-          {queryValue.length > 0 && !isFocused && (
+          {queryValue.length > 0 && (
             <button
               type="button"
               className="btn btn-link position-absolute end-0 top-50 translate-middle-y pe-3 text-muted border-0 shadow-none"

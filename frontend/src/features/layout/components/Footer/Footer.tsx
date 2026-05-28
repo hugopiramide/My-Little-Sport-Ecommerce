@@ -17,7 +17,7 @@ const Footer = () => {
             <h5 className="fw-bold mb-4 text-uppercase small">Help</h5>
             <ul className="list-unstyled d-flex flex-column gap-2">
               <li><Link to="/about-us" className="text-muted small">Shipping & Delivery</Link></li>
-              <li><Link to="/about-us#privacy-policy" className="text-muted small">Contact Us</Link></li>
+              <li><Link to="/contact-us" className="text-muted small">Contact Us</Link></li>
             </ul>
           </div>
 

@@ -99,14 +99,14 @@ sudo docker compose up --build
 
 Una vez que los contenedores estén levantados y estables, puedes acceder a las diferentes plataformas:
 
-* ** Tienda del Cliente (Frontend):** `http://localhost:5173`
+* **Tienda del Cliente (Frontend):** `http://localhost:5173`
   * Explora los catálogos deportivos, regístrate y realiza compras.
-* ** Panel de Gestión Administrativa:** `http://localhost:8080/login`
+* **Panel de Gestión Administrativa:** `http://localhost:8080/login`
   * Dashboard de administración web de productos y compras.
   * **Credenciales por defecto (inicializadas automáticamente por `data.sql`):**
     *  **Usuario/Email:** `admin@example.com`
     *  **Contraseña:** `AdminAa1!23dmin`
-* ** Endpoints de la API REST:** `http://localhost:8080/api`
+* **Endpoints de la API REST:** `http://localhost:8080/api`
   * Listados paginados integrados con HATEOAS.
 
 ---

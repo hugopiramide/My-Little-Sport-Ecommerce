@@ -270,7 +270,6 @@ const Gallery = () => {
                 >
                     <div className={`d-flex justify-content-between align-items-end mb-5 reveal-item ${gridReveal.visible ? 'revealed' : ''}`}>
                         <div>
-                            <span className="text-uppercase tracking-widest small text-muted d-block mb-2">Visual Index</span>
                             <h2 id="categories-heading" className="mb-0">Explore by Category</h2>
                         </div>
                         <Link
@@ -294,7 +293,6 @@ const Gallery = () => {
                             <img src={categories[0].img} alt={categories[0].alt}
                                 className="gallery-card__img w-100 h-100 object-cover transition-all" loading="lazy" />
                             <div className="gallery-card__overlay position-absolute bottom-0 start-0 w-100 p-4">
-                                <span className="gallery-card__tag">Category</span>
                                 <h3 className="text-white fw-black text-uppercase mb-2">{categories[0].label}</h3>
                                 <p className="text-white opacity-75 small mb-3">{categories[0].description}</p>
                                 <Link to="/articles" className="btn-custom bg-white border-0 py-2 px-4"
@@ -316,7 +314,6 @@ const Gallery = () => {
                                     <img src={categories[idx].img} alt={categories[idx].alt}
                                         className="gallery-card__img w-100 h-100 object-cover transition-all" loading="lazy" />
                                     <div className="gallery-card__overlay position-absolute bottom-0 start-0 w-100 p-3">
-                                        <span className="gallery-card__tag">Category</span>
                                         <h4 className="text-white fw-black text-uppercase mb-2">{categories[idx].label}</h4>
                                         <Link to="/articles" className="btn-custom bg-white border-0 py-1 px-3"
                                             style={{ fontSize: '12px' }}
@@ -338,7 +335,6 @@ const Gallery = () => {
                             <img src={categories[3].img} alt={categories[3].alt}
                                 className="gallery-card__img w-100 h-100 object-cover transition-all" loading="lazy" />
                             <div className="gallery-card__overlay position-absolute bottom-0 start-0 w-100 p-4">
-                                <span className="gallery-card__tag">Category</span>
                                 <h3 className="text-white fw-black text-uppercase mb-2">{categories[3].label}</h3>
                                 <p className="text-white opacity-75 small mb-3">{categories[3].description}</p>
                                 <Link to="/articles" className="btn-custom bg-white border-0 py-2 px-4"
@@ -390,7 +386,6 @@ const Gallery = () => {
                     <div className={`container mb-4 reveal-item ${momentReveal.visible ? 'revealed' : ''}`}>
                         <div className="d-flex justify-content-between align-items-end">
                             <div>
-                                <span className="text-uppercase tracking-widest small text-muted d-block mb-2">Our Athletes</span>
                                 <h2 id="moments-heading" className="mb-0">Captured Moments</h2>
                             </div>
                             <span className="text-muted small d-none d-md-block">← Drag to explore →</span>

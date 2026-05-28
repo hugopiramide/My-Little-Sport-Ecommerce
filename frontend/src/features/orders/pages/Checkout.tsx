@@ -127,16 +127,14 @@ const CheckoutForm: React.FC = () => {
   }
 
   const clearUserCart = async () => {
-    if (!cart?.cartItems) return
-    for (const item of cart.cartItems) {
-      try {
-        await fetch(`http://localhost:8080/api/cart-items/${item.id}`, {
-          method: 'DELETE',
-          headers: getAuthHeaders(),
-        })
-      } catch (err) {
-        console.error(`Error removing item ${item.id}:`, err)
-      }
+    try {
+      await fetch(`http://localhost:8080/api/carts/user/${userId}/clear`, {
+        method: 'DELETE',
+        headers: getAuthHeaders(),
+      })
+      window.dispatchEvent(new Event('cartUpdated'))
+    } catch (err) {
+      console.error('Error clearing cart:', err)
     }
   }
 

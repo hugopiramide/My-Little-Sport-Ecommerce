@@ -22,6 +22,8 @@ import Profile from './features/shared/pages/Profile/Profile.tsx'
 import Checkout from './features/orders/pages/Checkout.tsx'
 import OrderSuccess from './features/orders/pages/OrderSuccess.tsx'
 import { ContactUs } from './features/shared'
+import OrderHistory from './features/orders/pages/OrderHistory.tsx'
+import OrderDetails from './features/orders/pages/OrderDetails.tsx'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -70,6 +72,14 @@ const router = createBrowserRouter([
           {
             path: 'order-success',
             element: <OrderSuccess />
+          },
+          {
+            path: 'order-history',
+            element: <OrderHistory />
+          },
+          {
+            path: 'order-history/:orderId',
+            element: <OrderDetails />
           }
         ]
       },

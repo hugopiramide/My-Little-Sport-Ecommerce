@@ -1,0 +1,118 @@
+interface TokenPayload {
+    sub: string;
+    id: number;
+    authorities: string[];
+    iat: number;
+    exp: number;
+}
+
+export const decodeToken = (token: string): TokenPayload | null => {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        console.error('Error decoding token:', e);
+        return null;
+    }
+}
+
+export const isTokenExpired = (): boolean => {
+    const token = getToken()
+    if (!token) return true
+
+    const decoded = decodeToken(token)
+    if (!decoded || !decoded.exp) return true
+
+    return decoded.exp * 1000 < Date.now()
+}
+
+export const getCurrentUser = () => {
+    const userData = sessionStorage.getItem('user')
+    if (!userData) return null
+
+    try {
+        return JSON.parse(userData)
+    } catch (error) {
+        return null
+    }
+}
+
+export const getCurrentUserId = (): number | null => {
+    const token = getToken()
+    if (!token) return null
+
+    const decoded = decodeToken(token)
+    return decoded?.id || null
+}
+
+export const getToken = (): string | null => {
+    return sessionStorage.getItem('token')
+}
+
+export const getAuthHeaders = () => {
+    const token = getToken()
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json'
+    }
+    
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+    }
+    
+    return headers
+}
+
+export const isUserLoggedIn = (): boolean => {
+    if (sessionStorage.getItem("user") === null || sessionStorage.getItem("token") === null) {
+        return false;
+    }
+
+    if (isTokenExpired()) {
+        handleSessionExpired()
+        return false
+    }
+
+    return true
+}
+
+export const handleSessionExpired = () => {
+    sessionStorage.removeItem('user')
+    sessionStorage.removeItem('token')
+}
+
+export const authFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+    if (isTokenExpired()) {
+        handleSessionExpired()
+        throw new Error('Session expired. Please log in again.')
+    }
+
+    const response = await fetch(input, init)
+
+    if (response.status === 401) {
+        handleSessionExpired()
+        throw new Error('Session expired. Please log in again.')
+    }
+
+    return response
+}
+
+export const validatePassword = (password: string): { isValid: boolean; message?: string } => {
+    if (!password) return { isValid: false, message: 'Password is required' }
+    
+    const minLength = 8
+    const strongPasswordRegex = /^(?=\S+$)(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$/
+    
+    if (!strongPasswordRegex.test(password)) {
+        return {
+            isValid: false,
+            message: `Password must be at least ${minLength} characters and include uppercase, lowercase, digits and special characters`
+        }
+    }
+    
+    return { isValid: true }
+}

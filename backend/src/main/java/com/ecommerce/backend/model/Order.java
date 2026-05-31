@@ -1,5 +1,7 @@
 package com.ecommerce.backend.model;
 
+import com.ecommerce.backend.model.vo.ShippingAddress;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -44,22 +47,19 @@ public class Order {
     @Column(name = "total_price")
     private double total_price = 0.0;
 
-    @Column(name = "shipping_addres", length = 255)
-    private String shipping_addres;
+    @Embedded
+    private ShippingAddress shippingAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "order", orphanRemoval = true)
     private List<OrderItem> orderItems;
 
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(mappedBy = "order")
-    private ProductReview productReview;
+    @OneToMany(mappedBy = "order")
+    private List<ProductReview> productReviews;
 }

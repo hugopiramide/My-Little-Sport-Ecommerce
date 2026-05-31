@@ -1,6 +1,7 @@
 package com.ecommerce.backend.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,6 +11,7 @@ import lombok.ToString;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -36,8 +38,8 @@ public class Cart {
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "cart", orphanRemoval = true)
-    private List<CartItems> cartItems;
+    @OneToMany(mappedBy = "cart", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<CartItems> cartItems = new ArrayList<>();
 
     @Column(name = "update_at")
     private LocalDateTime update_at = LocalDateTime.now();

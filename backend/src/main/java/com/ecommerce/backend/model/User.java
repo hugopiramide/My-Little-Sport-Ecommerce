@@ -1,5 +1,7 @@
 package com.ecommerce.backend.model;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,10 +16,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.ecommerce.backend.model.enums.Role;
-import com.ecommerce.backend.model.vo.Birthday;
 import com.ecommerce.backend.model.vo.Password;
 import com.ecommerce.backend.model.vo.PersonalData;
-
+import com.ecommerce.backend.model.vo.ShippingAddress;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -29,6 +32,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.ecommerce.backend.model.converter.ShippingAddressListConverter;
 
 @Entity
 @Table(name = "user")
@@ -70,13 +74,29 @@ public class User implements UserDetails{
     @Embedded
     private Password password;
 
+    @Convert(converter = ShippingAddressListConverter.class)
+    @Column(name = "shipping_addresses", columnDefinition = "TEXT")
+    private List<ShippingAddress> shippingAddresses = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(name = "email_verified")
+    private Boolean emailVerified = Boolean.FALSE;
+
+    @Column(name = "email_verification_code_hash", length = 255)
+    private String emailVerificationCodeHash;
+
+    @Column(name = "email_verification_code_expiry")
+    private Instant emailVerificationCodeExpiry;
 
     public User(PersonalData personalData, Password password, Role role) {
         this.personalData = personalData;
         this.password = password;
         this.role = role;
+        this.emailVerified = Boolean.FALSE;
+        this.emailVerificationCodeHash = null;
+        this.emailVerificationCodeExpiry = null;
     }
 
     @Override
@@ -111,6 +131,6 @@ public class User implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return emailVerified == null || Boolean.TRUE.equals(emailVerified);
     }
 }

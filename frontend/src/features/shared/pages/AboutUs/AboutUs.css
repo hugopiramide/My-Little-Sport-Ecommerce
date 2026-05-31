@@ -1,0 +1,35 @@
+.about-content p {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.policy-section h4 {
+    border-left: 4px solid #000;
+    padding-left: 1rem;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    margin-top: 2rem;
+}
+
+.policy-section ul {
+    padding-left: 1.2rem;
+}
+
+.policy-section li {
+    margin-bottom: 0.5rem;
+}
+
+.fw-black {
+    font-weight: 900;
+}
+
+.tracking-tight-15 {
+    letter-spacing: -0.15em;
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}

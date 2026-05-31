@@ -21,5 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByFilters(@Param("dateFrom") LocalDateTime dateFrom,
                               @Param("dateTo") LocalDateTime dateTo,
                               @Param("status") OrderStatus status);
+
+    List<Order> findByUserId(Long userId);
 }
 

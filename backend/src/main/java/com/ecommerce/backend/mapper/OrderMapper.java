@@ -14,6 +14,7 @@ public interface OrderMapper {
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.personalData.name", target = "userName")
     @Mapping(source = "user.personalData.email", target = "userEmail")
+    @Mapping(source = "orderItems", target = "items")
     OrderResponseDTO toOrderResponseDTO(Order order);
 
     @Mapping(target = "id", ignore = true)

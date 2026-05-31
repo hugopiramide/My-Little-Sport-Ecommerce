@@ -8,31 +8,47 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecommerce.backend.dto.auth.*;
 import com.ecommerce.backend.dto.auth.RegisterRequest;
+import com.ecommerce.backend.dto.auth.ResendVerificationRequest;
+import com.ecommerce.backend.dto.auth.VerifyEmailRequest;
 import com.ecommerce.backend.model.User;
 import com.ecommerce.backend.model.enums.Role;
 import com.ecommerce.backend.model.vo.Password;
 import com.ecommerce.backend.model.vo.PersonalData;
-import com.ecommerce.backend.repository.UserRepository;
 import com.ecommerce.backend.service.interfaces.JwtService;
+import com.ecommerce.backend.service.interfaces.UserService;
+
+import java.time.Duration;
+import java.time.Instant;
 
 @Service
 public class AuthService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmailVerificationService emailVerificationService;
 
-    public AuthService( UserRepository userRepository, JwtService jwtService, AuthenticationManager authenticationManager ) {
-        this.userRepository = userRepository;
+    public AuthService(
+        UserService userService,
+        JwtService jwtService,
+        AuthenticationManager authenticationManager,
+        EmailVerificationService emailVerificationService
+    ) {
+        this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.emailVerificationService = emailVerificationService;
     }
 
     @Transactional
-    public AuthResponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) {
 
-        if (userRepository.findByPersonalDataUsername(request.username()).isPresent()) {
+        if (userService.findByUsername(request.username()).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
+        }
+
+        if (userService.findByEmail(request.email()).isPresent()) {
+            throw new IllegalArgumentException("Email already exists");
         }
         
         User user = new User(
@@ -47,10 +63,13 @@ public class AuthService {
             Role.USER
         );
         
-        userRepository.save(user);
-        
-        String jwtToken = jwtService.generateToken(user);
-        return new AuthResponse(jwtToken);
+        userService.save(user);
+
+        try {
+            return emailVerificationService.createAndSendCode(user);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -62,7 +81,21 @@ public class AuthService {
         User user = (User) authentication.getPrincipal();
             
         String jwtToken = jwtService.generateToken(user);
-        return new AuthResponse(jwtToken);
+        
+        boolean requiresVerification = !Boolean.TRUE.equals(user.getEmailVerified());
+        long verificationExpiresInSeconds = 0;
+        if (requiresVerification && user.getEmailVerificationCodeExpiry() != null) {
+            verificationExpiresInSeconds = Duration.between(
+                Instant.now(),
+                user.getEmailVerificationCodeExpiry()
+            ).getSeconds();
+            if (verificationExpiresInSeconds < 0) {
+                verificationExpiresInSeconds = 0;
+            }
+        }
+        
+        UserDTO userDTO = new UserDTO(user, requiresVerification, verificationExpiresInSeconds);
+        return new AuthResponse(jwtToken, userDTO, requiresVerification, verificationExpiresInSeconds);
     }
 
     public AuthResponse loginAdmin(LoginRequest request) {
@@ -76,6 +109,59 @@ public class AuthService {
         }
 
         String jwtToken = jwtService.generateToken(user);
-        return new AuthResponse(jwtToken);
+        
+        boolean requiresVerification = !Boolean.TRUE.equals(user.getEmailVerified());
+        long verificationExpiresInSeconds = 0;
+        if (requiresVerification && user.getEmailVerificationCodeExpiry() != null) {
+            verificationExpiresInSeconds = Duration.between(
+                Instant.now(),
+                user.getEmailVerificationCodeExpiry()
+            ).getSeconds();
+            if (verificationExpiresInSeconds < 0) {
+                verificationExpiresInSeconds = 0;
+            }
+        }
+        
+        UserDTO userDTO = new UserDTO(user, requiresVerification, verificationExpiresInSeconds);
+        return new AuthResponse(jwtToken, userDTO, requiresVerification, verificationExpiresInSeconds);
+    }
+
+    @Transactional
+    public AuthResponse verifyEmail(VerifyEmailRequest request) {
+        User user = userService.findByUsername(request.username())
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (Boolean.TRUE.equals(user.getEmailVerified())) {
+            String jwtToken = jwtService.generateToken(user);
+            UserDTO userDTO = new UserDTO(user, false, 0);
+            return new AuthResponse(jwtToken, userDTO, false, 0);
+        }
+
+        boolean isValid = emailVerificationService.isCodeValid(user, request.code());
+        if (!isValid) {
+            Instant expiresAt = user.getEmailVerificationCodeExpiry();
+            if (expiresAt != null && expiresAt.isBefore(Instant.now())) {
+                userService.delete(user);
+            }
+            throw new IllegalArgumentException("Invalid or expired verification code");
+        }
+
+        emailVerificationService.markEmailVerified(user);
+        String jwtToken = jwtService.generateToken(user);
+        UserDTO userDTO = new UserDTO(user, false, 0);
+        return new AuthResponse(jwtToken, userDTO, false, 0);
+    }
+
+    @Transactional
+    public RegisterResponse resendVerificationCode(ResendVerificationRequest request) {
+        User user = userService.findByUsername(request.username())
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (Boolean.TRUE.equals(user.getEmailVerified())) {
+            UserDTO userDTO = new UserDTO(user, false, 0);
+            return new RegisterResponse(false, userDTO, 0);
+        }
+
+        return emailVerificationService.createAndSendCode(user);
     }
 }

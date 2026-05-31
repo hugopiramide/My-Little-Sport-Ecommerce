@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ecommerce.backend.service.interfaces.BaseCrudService;
 
@@ -28,7 +29,7 @@ import jakarta.validation.Valid;
 public abstract class BaseRestController<T, CreateIn, UpdateIn> {
 
     private final BaseCrudService<T, CreateIn, UpdateIn, Long> service;
-    private final PagedResourcesAssembler<T> pagedResourcesAssembler;
+    protected final PagedResourcesAssembler<T> pagedResourcesAssembler;
 
     protected BaseRestController(BaseCrudService<T, CreateIn, UpdateIn, Long> service, PagedResourcesAssembler<T> pagedResourcesAssembler) {
         this.service = service;
@@ -53,13 +54,13 @@ public abstract class BaseRestController<T, CreateIn, UpdateIn> {
     }
 
     @PostMapping
-    public ResponseEntity<T> create(@Valid CreateIn dto) {
+    public ResponseEntity<T> create(@Valid @RequestBody CreateIn dto) {
         T created = service.create(dto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<T> update(@PathVariable Long id, @Valid UpdateIn dto) {
+    public ResponseEntity<T> update(@PathVariable Long id, @Valid @RequestBody UpdateIn dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
